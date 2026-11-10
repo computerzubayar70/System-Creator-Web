@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"> <!-- Speeds up the optional web-font connection. -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> <!-- Preconnects to the font file host. -->
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"> <!-- Loads optional Latin fonts with system fallbacks. -->
-  <link rel="stylesheet" href="styles.css"> <!-- Loads the shared website design. -->
+  <link rel="stylesheet" href="styles.css"> <link rel="stylesheet" href="enhance.css"> <!-- Loads the shared website design. -->
 </head> <!-- Ends the page metadata. -->
 <body> <!-- Starts the visible page. -->
   <header class="site-header"><div class="container header-inner"><a class="brand" href="index.html" aria-label="SYSTEM CREATOR home"><span class="brand-mark" aria-hidden="true">SC</span><span class="brand-name">SYSTEM <span>CREATOR</span></span></a><nav class="main-nav" aria-label="Main navigation"><a href="index.html">Home</a><a href="courses.html" aria-current="page">Courses</a><a href="about.html">About</a><a href="contact.html">Contact</a><a class="account-nav-link" data-account-link href="login.html">Log in</a></nav><a class="button button-small button-outline header-cta" href="https://wa.me/8801817155707">WhatsApp <span aria-hidden="true">↗</span></a></div></header> <!-- Provides shared page navigation and a direct WhatsApp link. -->
@@ -69,6 +69,6 @@
   </dialog> <!-- Ends the course-details popup. -->
   <footer class="site-footer"><div class="container footer-inner"><a class="brand footer-brand" href="index.html" aria-label="SYSTEM CREATOR home"><span class="brand-mark" aria-hidden="true">SC</span><span class="brand-name">SYSTEM <span>CREATOR</span></span></a><p>Learn online · Move your skills forward</p><div class="footer-links"><a href="courses.html">Courses</a><a href="about.html">About</a><a href="contact.html">Contact</a></div><a class="copyright" href="https://wa.me/8801817155707">WhatsApp us</a></div></footer> <!-- Provides working navigation and WhatsApp contact without displaying the number. -->
   <script src="courses.js"></script> <!-- Enables course details, coupon validation, and WhatsApp order links. -->
-  <script src="auth.js"></script> <!-- Enables the browser-only profile and sign-in demo. -->
+  <script src="site.js"></script> <script src="firebase-config.js"></script> <script src="auth.js"></script> <!-- Loads Firebase login, logout and profile. -->
 </body> <!-- Ends the visible page. -->
 </html> <!-- Ends the HTML document. -->
