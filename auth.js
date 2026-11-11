@@ -113,8 +113,14 @@
       say(authMessage, "");
       if (!needFirebase()) return;
       sessionStorage.setItem("sc-busy", "1");
-      try { await firebase.popup(firebase.auth, new firebase.Google()); sessionStorage.removeItem("sc-busy"); location.href = "profile.html"; }
-      catch (err) { console.error(err); sessionStorage.removeItem("sc-busy"); say(authMessage, friendly(err), "error"); }
+      sessionStorage.setItem("sc-google-redirect-pending", "1");
+      try { await firebase.redirect(firebase.auth, new firebase.Google()); }
+      catch (err) {
+        console.error(err);
+        sessionStorage.removeItem("sc-google-redirect-pending");
+        sessionStorage.removeItem("sc-busy");
+        say(authMessage, friendly(err), "error");
+      }
     });
 
     $("#forgot-button").addEventListener("click", async () => {
@@ -172,9 +178,26 @@
       const [app, a] = await Promise.all([import(FB + "firebase-app.js"), import(FB + "firebase-auth.js")]);
       firebase = {
         auth: a.getAuth(app.initializeApp(cfg)), signIn: a.signInWithEmailAndPassword, create: a.createUserWithEmailAndPassword,
-        popup: a.signInWithPopup, Google: a.GoogleAuthProvider, signOut: a.signOut, updateProfile: a.updateProfile,
+        redirect: a.signInWithRedirect, getRedirectResult: a.getRedirectResult,
+        Google: a.GoogleAuthProvider, signOut: a.signOut, updateProfile: a.updateProfile,
         reset: a.sendPasswordResetEmail, verify: a.sendEmailVerification
       };
+      if (pageType === "login" && sessionStorage.getItem("sc-google-redirect-pending")) {
+        try {
+          const result = await firebase.getRedirectResult(firebase.auth);
+          sessionStorage.removeItem("sc-google-redirect-pending");
+          sessionStorage.removeItem("sc-busy");
+          if (result && result.user) {
+            location.replace("profile.html");
+            return;
+          }
+        } catch (e) {
+          console.error("Google sign-in redirect failed", e);
+          sessionStorage.removeItem("sc-google-redirect-pending");
+          sessionStorage.removeItem("sc-busy");
+          say(authMessage, friendly(e), "error");
+        }
+      }
       a.onAuthStateChanged(firebase.auth, (user) => {
         renderNav(user);
         if (pageType === "profile") renderProfile(user);
