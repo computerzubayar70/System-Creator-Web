@@ -6,14 +6,18 @@ document.addEventListener("DOMContentLoaded", () => { // Starts setup after the 
   const description = document.querySelector("#modal-course-description"); // Stores the dialog course description.
   const category = document.querySelector("#modal-course-category"); // Stores the dialog course category label.
   const price = document.querySelector("#modal-course-price"); // Stores the dialog's current price display.
+  const classicPrice = document.querySelector("#modal-classic-price"); // Stores the CLASS A course fee presentation.
+  const originalPrice = document.querySelector("#modal-original-price"); // Stores the undiscounted course fee.
+  const couponDiscount = document.querySelector("#modal-coupon-discount"); // Stores the separately displayed coupon discount.
   const icon = document.querySelector("#modal-app-icon"); // Stores the dialog's course app-style icon.
   const form = document.querySelector("#coupon-form"); // Stores the coupon form.
   const input = document.querySelector("#coupon-code"); // Stores the coupon text field.
   const message = document.querySelector("#coupon-message"); // Stores the live coupon validation message.
   const buyLink = document.querySelector("#modal-buy-link"); // Stores the WhatsApp purchase link.
   const closeButton = document.querySelector(".modal-close"); // Stores the button that closes the dialog.
+  const isClassB = document.body.classList.contains("class-b"); // Keeps CLASS A checkout behavior unchanged.
   // Stops setup with a visible developer error if required page markup is missing.
-  if (!dialog || !title || !description || !category || !price || !icon || !form || !input || !message || !buyLink || !closeButton) { // Checks every required dialog element before binding events.
+  if (!dialog || !title || !description || !category || !price || !classicPrice || !originalPrice || !couponDiscount || !icon || !form || !input || !message || !buyLink || !closeButton) { // Checks every required dialog element before binding events.
     console.error("Course purchase dialog could not initialize because required elements are missing."); // Reports broken markup instead of silently failing.
     return; // Prevents later event handlers from using missing elements.
   } // Ends the required-element guard.
@@ -24,16 +28,21 @@ document.addEventListener("DOMContentLoaded", () => { // Starts setup after the 
   // Maps course titles to concise app-style marks for the popup banner.
   const appMarks = { "Adobe Photoshop": "Ps", "Adobe Illustrator": "Ai", "Adobe Premiere Pro": "Pr", "Adobe After Effects": "Ae", "Adobe Lightroom": "Lr", "Adobe InDesign": "Id", "Adobe Express": "Ex", "Adobe Audition": "Au", "Adobe Animate": "An", "Adobe Acrobat Pro": "Ac", "Adobe Dreamweaver": "Dw", "Adobe Firefly": "Ff", "CapCut Video Editing": "CC", "Python Programming": "Py", "Java Programming": "Ja", "HTML Fundamentals": "5", "CSS Fundamentals": "3", "C Programming": "C", "C++ Programming": "C++", "JavaScript Fundamentals": "JS", "C# Programming": "C#", "SQL & Databases": "SQL", "React Fundamentals": "⚛", "Git & GitHub Basics": "Git", "Digital Marketing Fundamentals": "DM", "SEO Fundamentals": "SEO", "Social Media Marketing": "SM", "Google Ads Basics": "Ad" }; // Keeps the selected course icon recognizable in its detail popup.
   // Formats a course fee as a readable Bangladeshi taka amount.
-  const formatPrice = (amount) => `BDT ${amount.toLocaleString("en-BD")}`; // Adds currency and thousands separators consistently.
+  const formatPrice = (amount) => isClassB
+    ? `৳${amount.toLocaleString("en-BD")}`
+    : `BDT ${amount.toLocaleString("en-BD")}`; // Preserves CLASS A currency formatting.
   // Builds the order message from the selected course and final price.
   const updateBuyLink = () => { // Refreshes WhatsApp checkout whenever a course or coupon changes.
-    const discount = couponApplied ? Math.min(200, selectedCourse.amount) : 0; // Caps the discount so the order never becomes negative.
+    const discount = couponApplied ? Math.min(isClassB ? 400 : 200, selectedCourse.amount) : 0; // Caps the discount so the order never becomes negative.
     const finalAmount = selectedCourse.amount - discount; // Calculates the amount the visitor will request to pay.
     const orderLines = [`Hello, I would like to enroll in ${selectedCourse.name}.`, `Course fee: ${formatPrice(selectedCourse.amount)}.`]; // Starts a clear WhatsApp order message.
     if (couponApplied) orderLines.push(`Coupon code: DPI (-${formatPrice(discount)}).`); // Includes the verified coupon and its discount.
     orderLines.push(`Total: ${formatPrice(finalAmount)}.`); // Adds the final amount to the WhatsApp message.
     buyLink.href = `https://wa.me/8801817155707?text=${encodeURIComponent(orderLines.join(" "))}`; // Makes the purchase button send the exact order details.
+    originalPrice.textContent = formatPrice(selectedCourse.amount); // Preserves the original fee even after a coupon is applied.
+    couponDiscount.textContent = `-${formatPrice(discount)}`; // Shows the coupon reduction as a separate amount.
     price.textContent = formatPrice(finalAmount); // Updates the price shown in the popup.
+    classicPrice.textContent = `BDT ${finalAmount.toLocaleString("en-BD")}`; // Keeps the original CLASS A dialog price current.
   }; // Ends the order-link update function.
   // Opens the course popup when a visitor selects a course's Buy button.
   document.querySelectorAll(".course-card").forEach((card) => { // Adds the purchase interaction to every course card.
@@ -85,13 +94,16 @@ document.addEventListener("DOMContentLoaded", () => { // Starts setup after the 
       input.focus(); // Returns focus to the field so the visitor can correct the code.
       return; // Prevents invalid coupons from receiving a discount.
     } // Ends the invalid-code branch.
-    couponApplied = true; // Applies the verified BDT 200 discount to the current course.
-    message.textContent = "Coupon applied. BDT 200 has been deducted from your course fee."; // Confirms the discount in an accessible live region.
+    couponApplied = true; // Applies the verified coupon discount to the current course.
+    const discount = Math.min(isClassB ? 400 : 200, selectedCourse.amount);
+    message.textContent = `Coupon applied. ${formatPrice(discount)} has been deducted from your course fee.`; // Confirms the discount in an accessible live region.
     message.classList.add("coupon-success"); // Adds the visual success state to the validation message.
     message.classList.remove("coupon-error"); // Clears any previous error styling.
     input.removeAttribute("aria-invalid"); // Clears the invalid state from the coupon field.
     updateBuyLink(); // Updates the displayed price and WhatsApp order with the discount.
-    buyLink.textContent = "Buy with BDT 200 discount"; // Makes the discounted purchase action clear.
+    buyLink.textContent = isClassB
+      ? `Buy with ${formatPrice(discount)} discount`
+      : `Buy with BDT ${discount} discount`; // Makes the discounted purchase action clear.
   }); // Ends coupon form validation.
   // Closes the dialog when the visitor selects its close button.
   closeButton.addEventListener("click", () => dialog.close()); // Uses the native close method to restore focus correctly.

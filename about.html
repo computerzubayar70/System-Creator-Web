@@ -6,12 +6,14 @@
   <meta name="description" content="Learn about SYSTEM CREATOR, our online courses, and founder and CEO MD Jobaer."> <!-- Describes the company information page. -->
   <meta name="theme-color" content="#07111f"> <!-- Matches the browser theme to the website background. -->
   <title>About Us | SYSTEM CREATOR</title> <!-- Sets the browser tab title. -->
+  <link rel="icon" type="image/svg+xml" href="brand-icon.svg"> <!-- Uses the custom SYSTEM CREATOR icon in the browser tab. -->
+  <script src="theme.js"></script> <!-- Restores the saved CLASS B theme before the page is painted. -->
   <link rel="preconnect" href="https://fonts.googleapis.com"> <!-- Speeds up the optional web-font connection. -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> <!-- Preconnects to the font file host. -->
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"> <!-- Loads optional Latin fonts with system fallbacks. -->
-  <link rel="stylesheet" href="styles.css"> <link rel="stylesheet" href="enhance.css"> <!-- Loads the shared website design. -->
+  <link rel="stylesheet" href="styles.css"> <link rel="stylesheet" href="enhance.css"> <link rel="stylesheet" href="class-b.css"> <!-- Keeps CLASS A intact and layers CLASS B on top. -->
 </head> <!-- Ends the page metadata. -->
-<body> <!-- Starts the visible page. -->
+<body class="class-b"> <!-- Activates the CLASS B visual direction. -->
   <header class="site-header"><div class="container header-inner"><a class="brand" href="index.html" aria-label="SYSTEM CREATOR home"><span class="brand-mark" aria-hidden="true">SC</span><span class="brand-name">SYSTEM <span>CREATOR</span></span></a><nav class="main-nav" aria-label="Main navigation"><a href="index.html">Home</a><a href="courses.html">Courses</a><a href="about.html" aria-current="page">About</a><a href="contact.html">Contact</a><a class="account-nav-link" data-account-link href="login.html">Log in</a></nav><a class="button button-small button-outline header-cta" href="https://wa.me/8801817155707">WhatsApp <span aria-hidden="true">↗</span></a></div></header> <!-- Provides shared navigation and a direct WhatsApp link. -->
   <main> <!-- Starts the about page content. -->
     <section class="page-hero"><div class="container"><p class="eyebrow">ABOUT SYSTEM CREATOR</p><h1>Keep moving forward <span>through learning.</span></h1><p class="page-intro">SYSTEM CREATOR is an online learning platform offering courses in Adobe and creative tools, coding, and digital marketing.</p></div></section> <!-- Introduces the online course business. -->
@@ -19,6 +21,6 @@
     <section class="contact-section"><div class="container contact-inner"><div><p class="eyebrow">SYSTEM CREATOR</p><h2>Want to know more? <span>Get in touch.</span></h2><p class="contact-copy">Message us on WhatsApp for course details and enrollment information.</p></div><a class="button button-light" href="https://wa.me/8801817155707">Message us on WhatsApp <span aria-hidden="true">↗</span></a></div></section> <!-- Offers a working WhatsApp link from the about page. -->
   </main> <!-- Ends the about page content. -->
   <footer class="site-footer"><div class="container footer-inner"><a class="brand footer-brand" href="index.html" aria-label="SYSTEM CREATOR home"><span class="brand-mark" aria-hidden="true">SC</span><span class="brand-name">SYSTEM <span>CREATOR</span></span></a><p>Learn online · Move your skills forward</p><div class="footer-links"><a href="courses.html">Courses</a><a href="about.html">About</a><a href="contact.html">Contact</a></div><a class="copyright" href="https://wa.me/8801817155707">WhatsApp us</a></div></footer> <!-- Provides working page navigation and WhatsApp contact without displaying the number. -->
-  <script src="site.js"></script> <script src="firebase-config.js"></script> <script src="auth.js"></script> <!-- Loads Firebase login, logout and profile. -->
+  <script src="site.js"></script> <script src="firebase-config.js"></script> <script src="auth.js"></script> <script src="class-b.js"></script> <!-- Loads shared navigation, authentication, and CLASS B interactions. -->
 </body> <!-- Ends the visible page. -->
 </html> <!-- Ends the HTML document. -->

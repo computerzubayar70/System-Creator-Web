@@ -6,9 +6,11 @@
   <meta name="theme-color" content="#07111f"> <!-- Matches browser chrome to the website background. -->
   <meta name="description" content="View your SYSTEM CREATOR account profile."> <!-- Describes the profile page. -->
   <title>My Profile | SYSTEM CREATOR</title> <!-- Sets the browser tab title. -->
-  <link rel="stylesheet" href="styles.css"> <link rel="stylesheet" href="enhance.css"> <!-- Loads the shared website styling. -->
+  <link rel="icon" type="image/svg+xml" href="brand-icon.svg"> <!-- Uses the custom SYSTEM CREATOR icon in the browser tab. -->
+  <script src="theme.js"></script> <!-- Restores the saved CLASS B theme before the page is painted. -->
+  <link rel="stylesheet" href="styles.css"> <link rel="stylesheet" href="enhance.css"> <link rel="stylesheet" href="class-b.css"> <!-- Keeps CLASS A intact and layers CLASS B on top. -->
 </head> <!-- Ends the page metadata. -->
-<body data-page="profile"> <!-- Identifies this page to the account script. -->
+<body class="class-b" data-page="profile"> <!-- Identifies the CLASS B profile page. -->
   <header class="site-header"> <!-- Displays the shared site navigation. -->
     <div class="container header-inner"> <!-- Aligns the logo and navigation. -->
       <a class="brand" href="index.html" aria-label="SYSTEM CREATOR home"><span class="brand-mark" aria-hidden="true">SC</span><span class="brand-name">SYSTEM <span>CREATOR</span></span></a> <!-- Returns visitors to the home page. -->
@@ -30,6 +32,6 @@
     </section>
   </main> <!-- Ends the profile page content. -->
   <footer class="site-footer"><div class="container footer-inner"><a class="brand footer-brand" href="index.html" aria-label="SYSTEM CREATOR home"><span class="brand-mark" aria-hidden="true">SC</span><span class="brand-name">SYSTEM <span>CREATOR</span></span></a><p>Learn online · Move your skills forward</p><div class="footer-links"><a href="courses.html">Courses</a><a href="about.html">About</a><a href="contact.html">Contact</a></div><a class="copyright" href="https://wa.me/8801817155707">WhatsApp us</a></div></footer> <!-- Provides shared page links and a working WhatsApp contact. -->
-  <script src="site.js"></script> <script src="firebase-config.js"></script> <script src="auth.js"></script> <!-- Enables local profile display and log out. -->
+  <script src="site.js"></script> <script src="firebase-config.js"></script> <script src="auth.js"></script> <script src="class-b.js"></script> <!-- Enables profile, logout, and CLASS B interactions. -->
 </body> <!-- Ends the visible page. -->
 </html> <!-- Ends the HTML document. -->

@@ -7,6 +7,14 @@
   const accountLinks = document.querySelectorAll("[data-account-link]");
   const authMessage = $("#auth-message"), profileMessage = $("#profile-message");
   const FB = "https://www.gstatic.com/firebasejs/10.12.2/";
+  let resolveAuthReady;
+  let authReadyResolved = false;
+  window.systemCreatorUser = null;
+  window.systemCreatorAuthReady = new Promise((resolve) => { resolveAuthReady = resolve; });
+  const checkoutCourse = new URLSearchParams(location.search).get("checkout");
+  const afterAuthenticationUrl = () => checkoutCourse
+    ? `courses.html?checkout=${encodeURIComponent(checkoutCourse)}`
+    : "profile.html";
 
   const say = (el, text, type) => { if (el) { el.textContent = text; el.dataset.type = type || "info"; } };
   const msg = (t, type) => say(pageType === "profile" ? profileMessage : authMessage, t, type);
@@ -40,6 +48,11 @@
   logoutBtn.type = "button"; logoutBtn.className = "nav-logout"; logoutBtn.textContent = "Log out"; logoutBtn.hidden = true;
   if (accountLinks[0]) accountLinks[0].after(logoutBtn);
   const renderNav = (user) => {
+    window.systemCreatorUser = user;
+    if (!authReadyResolved) {
+      authReadyResolved = true;
+      resolveAuthReady(user);
+    }
     accountLinks.forEach((l) => { l.textContent = user ? "My profile" : "Log in"; l.href = user ? "profile.html" : "login.html"; });
     logoutBtn.hidden = !user;
   };
@@ -88,7 +101,7 @@
       e.preventDefault(); say(authMessage, "");
       if (!needFirebase()) return;
       busy(loginForm, true);
-      try { await firebase.signIn(firebase.auth, $("#login-email").value.trim(), $("#login-password").value); location.href = "profile.html"; }
+      try { await firebase.signIn(firebase.auth, $("#login-email").value.trim(), $("#login-password").value); location.href = afterAuthenticationUrl(); }
       catch (err) { console.error(err); say(authMessage, friendly(err), "error"); busy(loginForm, false); }
     });
 
@@ -105,7 +118,7 @@
         try { await firebase.updateProfile(cred.user, { displayName: name }); } catch (x) { console.warn(x); }
         try { await firebase.verify(cred.user); } catch (x) { console.warn(x); }
         sessionStorage.removeItem("sc-busy");
-        location.href = "profile.html?welcome=1";
+        location.href = `${afterAuthenticationUrl()}${checkoutCourse ? "" : "?welcome=1"}`;
       } catch (err) { console.error(err); sessionStorage.removeItem("sc-busy"); say(authMessage, friendly(err), "error"); busy(registerForm, false); }
     });
 
@@ -188,7 +201,7 @@
           sessionStorage.removeItem("sc-google-redirect-pending");
           sessionStorage.removeItem("sc-busy");
           if (result && result.user) {
-            location.replace("profile.html");
+            location.replace(afterAuthenticationUrl());
             return;
           }
         } catch (e) {
@@ -201,7 +214,7 @@
       a.onAuthStateChanged(firebase.auth, (user) => {
         renderNav(user);
         if (pageType === "profile") renderProfile(user);
-        if (pageType === "login" && user && !sessionStorage.getItem("sc-busy")) location.replace("profile.html");
+        if (pageType === "login" && user && !sessionStorage.getItem("sc-busy")) location.replace(afterAuthenticationUrl());
       });
     } catch (e) {
       console.error("Firebase failed to load", e);

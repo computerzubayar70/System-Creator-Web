@@ -6,12 +6,14 @@
   <meta name="description" content="Learn Adobe creative software, CapCut, C, C++, coding, and digital marketing with SYSTEM CREATOR online courses."> <!-- Describes the online course website for search engines. -->
   <meta name="theme-color" content="#07111f"> <!-- Matches the browser theme to the website background. -->
   <title>SYSTEM CREATOR | Online Courses</title> <!-- Sets the browser tab title. -->
+  <link rel="icon" type="image/svg+xml" href="brand-icon.svg"> <!-- Uses the custom SYSTEM CREATOR icon in the browser tab. -->
+  <script src="theme.js"></script> <!-- Restores the saved CLASS B theme before the page is painted. -->
   <link rel="preconnect" href="https://fonts.googleapis.com"> <!-- Speeds up the optional web-font connection. -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> <!-- Preconnects to the font file host. -->
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"> <!-- Loads optional Latin fonts with system fallbacks. -->
-  <link rel="stylesheet" href="styles.css"> <link rel="stylesheet" href="enhance.css"> <!-- Loads the shared website design. -->
+  <link rel="stylesheet" href="styles.css"> <link rel="stylesheet" href="enhance.css"> <link rel="stylesheet" href="class-b.css"> <!-- Keeps CLASS A intact and layers CLASS B on top. -->
 </head> <!-- Ends the page metadata. -->
-<body> <!-- Starts the visible page. -->
+<body class="class-b"> <!-- Activates the CLASS B visual direction. -->
   <header class="site-header"> <!-- Keeps the logo and page links accessible at the top. -->
     <div class="container header-inner"> <!-- Aligns the header content to the page width. -->
       <a class="brand" href="index.html" aria-label="SYSTEM CREATOR home"><span class="brand-mark" aria-hidden="true">SC</span><span class="brand-name">SYSTEM <span>CREATOR</span></span></a> <!-- Links the brand logo to the home page. -->
@@ -45,6 +47,6 @@
     <section class="contact-section"><div class="container contact-inner"><div><p class="eyebrow">READY TO START LEARNING?</p><h2>Choose a course.<br><span>Let’s talk.</span></h2><p class="contact-copy">Message us on WhatsApp for enrollment, course details, and pricing.</p></div><a class="button button-light" href="https://wa.me/8801817155707?text=I%27d%20like%20to%20enroll%20in%20a%20SYSTEM%20CREATOR%20course">Contact us on WhatsApp <span aria-hidden="true">↗</span></a></div></section> <!-- Invites prospective students to contact the business through WhatsApp. -->
   </main> <!-- Ends the home page content. -->
   <footer class="site-footer"><div class="container footer-inner"><a class="brand footer-brand" href="index.html" aria-label="SYSTEM CREATOR home"><span class="brand-mark" aria-hidden="true">SC</span><span class="brand-name">SYSTEM <span>CREATOR</span></span></a><p>Learn online · Move your skills forward</p><div class="footer-links"><a href="courses.html">Courses</a><a href="about.html">About</a><a href="contact.html">Contact</a></div><a class="copyright" href="https://wa.me/8801817155707">WhatsApp us</a></div></footer> <!-- Provides shared page links and a working WhatsApp contact. -->
-  <script src="site.js"></script> <script src="firebase-config.js"></script> <script src="auth.js"></script> <!-- Loads Firebase login, logout and profile. -->
+  <script src="site.js"></script> <script src="firebase-config.js"></script> <script src="auth.js"></script> <script src="class-b.js"></script> <!-- Loads shared navigation, authentication, and CLASS B interactions. -->
 </body> <!-- Ends the visible page. -->
 </html> <!-- Ends the HTML document. -->
